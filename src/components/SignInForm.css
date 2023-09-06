@@ -1,0 +1,119 @@
+* {
+  text-decoration: none;
+}
+body{
+
+  font-family: 'Inter', sans-serif;
+}
+
+.content {
+  display: flex;
+}
+
+section img {
+  width: 500px;
+  height: 700px;
+  padding: 25px;
+  border-radius: 60px;
+}
+
+aside {
+  margin-left: 150px;
+  margin-top: 80px;
+}
+
+aside h1 {
+  font-size: 50px;
+}
+
+aside p {
+  font-size: 20px;
+  margin-top: -20px;
+}
+
+form input {
+  border: none;
+  background-color: #F4F4F4;
+  padding: 20px;
+  margin: 10px;
+  font-size: 20px;
+}
+
+#username, #password {
+  width: 600px;
+  border-radius: 10px;
+}
+
+.btnsignup {
+  background-color: #0F75FF;
+  color: white;
+  border: none;
+  width: 635px;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 12px;
+  margin-top: 30px;
+  border-radius: 10px;
+}
+
+span {
+  font-size: 20px;
+}
+
+.socialmediasignin {
+  background-color: transparent;
+  border: 0px;
+  box-shadow: 0px 0px 4px 2px rgba(0.1, 0.1, 0.1, 0.1);
+  width: 250px;
+  padding: 10px;
+  border-radius: 20px;
+  margin-left: 200px;
+  margin-top: 200px;
+}
+
+@media (max-width: 768px) {
+  section img {
+      display: none; /* Hide the image for screens less than 768px */
+  }
+
+  .content {
+      flex-direction: column; /* Stack content in a column */
+      align-items: center;
+  }
+
+  .socialmediasignin {
+      margin-top: 150px;
+      font-size: 14px;
+      width: 200px;
+      margin-left:40px;
+      
+  }
+
+  .btnsignup {
+      margin-left: 40px;
+      font-size: 16px;
+      width: 200px;
+
+  }
+
+  aside {
+      margin-left: 0;
+      margin-top: 20px;
+  }
+
+  aside h1{
+      font-size: 25px;
+      margin-left: 20px;
+  }
+  aside p{
+      font-size: 16px;
+      padding-top: 20px;
+      margin-left: 17px;
+  }
+  #username , #password{
+      width: 86%;
+      margin-left: 10px;
+  }
+
+}
