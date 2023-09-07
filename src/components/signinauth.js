@@ -16,7 +16,7 @@ function SignInAuth() {
       <aside>
         <div className="center">
           <h1>Login to your account</h1>
-          <p>Don't have an account? <Link to ="/SignUpForm">Sign Up</Link></p>
+          <p>Don't have an account? <Link to ="/SignUpForm"  style={{color:'blue'}}>Sign Up</Link></p>
         </div>
         <form>
           <input type="text" placeholder="User name / E-mail" id="username" /><br />

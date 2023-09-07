@@ -14,7 +14,7 @@ function SignUpForm() {
       <aside>
         <center>
           <h1>Create an account</h1>
-          <p>Already have an account? <Link to ="/">Sign in</Link></p>
+          <p>Already have an account? <Link to ="/" style={{color:'blue'}}>Sign in</Link></p>
         </center>
         <form>
           <input type="text" placeholder="User name" id="username" /><br />
