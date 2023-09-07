@@ -1,0 +1,122 @@
+*{
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+}
+.content{
+    display: flex;
+}
+section img{
+    width: 500px;
+    height: 700px;
+    padding: 25px;
+    border-radius: 60px;
+}
+aside{
+    margin-left: 150px;
+    margin-top: 80px;
+}
+
+aside h1{
+    font-size: 50px;
+}
+aside p{
+    font-size: 20px;
+    margin-top: -20px;
+}
+
+form input{
+    border: none;
+    background-color: #F4F4F4;
+    padding: 20px;
+    margin: 10px;
+    font-size: 20px;
+}
+
+
+
+#username{
+width: 600px;    
+border-radius: 10px;
+}
+
+.socialhandles {
+ border: 1px solid #edecec;
+ border-radius: 20px;
+ padding-top: 30px;
+ margin-top: 20px;
+ height: 270px;
+ padding-left: 250px;
+}
+
+.btn{
+    width: 200px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+.gmail{
+    margin-top:50px;
+}
+
+.facebook{
+    margin-top: 20px;
+}
+.github{
+    margin-top: 20px;
+}
+
+.cancelbtn{
+    background-color: #313131;
+    color:white;
+    border: 0px;
+    border-radius: 20px;
+    width: 150px;
+    padding: 10px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+
+
+@media (max-width: 768px) {
+    section img {
+        display: none; /* Hide the image for screens less than 768px */
+    }
+
+    .content {
+        flex-direction: column; /* Stack content in a column */
+        align-items: center;
+    }
+
+
+    aside {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .center h1{
+        font-size: 30px;
+        margin-left: 5%;
+
+    }
+    .center p{
+        font-size: 16px;
+        margin-left: 10%;
+    }
+    .cancelbtn{
+        margin-left: 80px;
+    }
+    .socialhandles *{
+        margin-left: -30px;
+    }
+    .socialhandles .cancelbtn{
+        margin-left: -10px;
+    }
+    .socialhandles{
+        margin-left: -160px;
+    }
+
+}
+
+

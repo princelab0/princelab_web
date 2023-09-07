@@ -1,0 +1,117 @@
+/* SignUpForm.css */
+
+* {
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .content {
+    display: flex;
+  }
+  
+  section img {
+    width: 500px;
+    height: 700px;
+    padding: 25px;
+    border-radius: 60px;
+  }
+  
+  aside {
+    margin-left: 150px;
+    margin-top: 80px;
+  }
+  
+  aside h1 {
+    font-size: 50px;
+  }
+  
+  aside p {
+    font-size: 20px;
+    margin-top: -20px;
+  }
+  
+  form input {
+    border: none;
+    background-color: #F4F4F4;
+    padding: 20px;
+    margin: 10px;
+    font-size: 20px;
+  }
+  
+  #username, #password, #fname, #lname {
+    width: 600px;
+    border-radius: 10px;
+  }
+  
+  #fname {
+    width: 265px;
+    border-radius: 10px;
+  }
+  
+  #lname {
+    width: 269px;
+    border-radius: 10px;
+  }
+  
+  button.sgnup {
+    background-color: #0F75FF;
+    color: white;
+    border: none;
+    width: 635px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 12px;
+    margin-top: 30px;
+    border-radius: 10px;
+  }
+  
+  span {
+    font-size: 20px;
+  }
+  
+  @media (min-width: 481px) and (max-width: 766px) {
+    section img {
+      display: none;
+    }
+  
+    .content {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    aside h1 {
+      margin-top: 10%;
+      font-size: 40px;
+      margin-left:-30%;
+    }
+  
+    aside p {
+      font-size:20px;
+      padding-top: 20px;
+      margin-left:-30%;
+      margin-top: -27px;
+      margin-bottom: 20px;
+    }
+  
+    #username, #password, #fname, #lname {
+      width: 400px;
+      margin-left:-10%;
+    }
+  
+    #checkbox {
+      margin-left: -10%;
+    }
+  
+    span {
+      font-size: 20px;
+    }
+  
+    button.sgnup {
+      width: 300px;
+      margin-left: 5%;
+    }
+  }
+
+
+  
