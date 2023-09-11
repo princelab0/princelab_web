@@ -14,10 +14,13 @@ const cors = require("cors")
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const jwt = require("jsonwebtoken")
+const { resolve } = require("path");
+
 
 
 const app = express();
 
+app.use(express.static(process.env.STATIC_DIR));
 
 app.use(express.json());
 app.use(cors({
@@ -55,9 +58,11 @@ app.get('/', (req, res) => {
                 return res.json({Message: "Token Authentication Error"})
             }else {
                 req.fname = decoded.fname;
+                req.lname = decoded.lname;
+                req.password = decoded.password;
             }
         })
-        return res.json({valid: true, email:req.session.email, fname: req.fname})
+        return res.json({valid: true, email:req.session.email, fname: req.fname, lname:req.lname, password:req.password})
     } else {
         return res.json({valid: false})
     }
@@ -87,9 +92,10 @@ app.post('/login', (req, res) => {
         if(error) return res.json({Message: "Error inside Server"});
         if(result.length > 0) {
             req.session.email = result[0].email;
-
             const fname = result[0].fname;
-            const token = jwt.sign({fname}, "our-jsonwebtoken-secret-key", {expiresIn: '1d'})
+            const lname = result[0].lname;
+            const password = result[0].password;
+            const token = jwt.sign({fname,lname, password}, "our-jsonwebtoken-secret-key", {expiresIn: '1d'})
             res.cookie('token',token);
             return res.json({Login: true})
         } else {
@@ -132,6 +138,37 @@ app.post("/payment", async (req, res) => {
 
 
 
+// Payment Element Config
+
+app.get("/config", (req, res) => {
+    res.json({
+        publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    })
+})
+
+
+app.post("/create-payment-intent", async (req, res) => {
+    try {
+      const paymentIntent = await Stripe.paymentIntents.create({
+        currency: "NPR",
+        amount: 130000*100,
+        automatic_payment_methods: { enabled: true },
+      });
+  
+      // Sending publishable key and PaymentIntent details to client
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (e) {
+      return res.status(400).send({
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }); 
+
+
 app.listen(process.env.PORT || 5001, () => {
-    console.log("Server Running")
+    console.log("Server Running at 5001")
 })
