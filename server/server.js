@@ -59,17 +59,21 @@ app.get("/", (req, res) => {
       if (error) {
         return res.json({ Message: "Token Authentication Error" });
       } else {
+        req.id = decoded.id;
         req.fname = decoded.fname;
         req.lname = decoded.lname;
         req.password = decoded.password;
+        req.status = decoded.status;
       }
     });
     return res.json({
       valid: true,
+      id: req.id,
       email: req.session.email,
       fname: req.fname,
       lname: req.lname,
       password: req.password,
+      status: req.status,
     });
   } else {
     return res.json({ valid: false });
@@ -99,11 +103,13 @@ app.post("/login", (req, res) => {
     if (error) return res.json({ Message: "Error inside Server" });
     if (result.length > 0) {
       req.session.email = result[0].email;
+      const id = result[0].id;
       const fname = result[0].fname;
       const lname = result[0].lname;
       const password = result[0].password;
+      const status = result[0].status;
       const token = jwt.sign(
-        { fname, lname, password },
+        { id,fname, lname, password,status},
         "our-jsonwebtoken-secret-key",
         { expiresIn: "1d" }
       );
@@ -156,15 +162,24 @@ app.get("/config", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   try {
+    const {amountInCredits} = req.body;
+
+    if (typeof amountInCredits !== 'number' || amountInCredits <= 0) {
+      throw new Error('Invalid amountInCredits');
+    }
+    const amountInNPR = amountInCredits * 10;
+
+
     const paymentIntent = await Stripe.paymentIntents.create({
       currency: "NPR",
-      amount: 130000 * 100,
+       amount: amountInNPR * 100,      //130000 * 100,
       automatic_payment_methods: { enabled: true },
     });
 
     // Sending publishable key and PaymentIntent details to client
     res.send({
       clientSecret: paymentIntent.client_secret,
+      purchasedCredits: amountInCredits,
     });
   } catch (e) {
     return res.status(400).send({
@@ -174,6 +189,62 @@ app.post("/create-payment-intent", async (req, res) => {
     });
   }
 });
+
+
+
+// app.post("/verify-user", (req, res) => {
+//   const { userId } = req.body;
+
+//   // Update the user's status to 'verified' in the database
+//   const updateQuery = `UPDATE login SET status = 'verified' WHERE id = ?`;
+
+//   db.query(updateQuery, [userId], (err, result) => {
+//     if (err) {
+//       console.error('Error updating user status:', err);
+//       res.status(500).json({ error: 'An error occurred while verifying the user' });
+//     } else {
+//       console.log(`User with ID ${userId} has been verified`);
+//       res.json({ success: true });
+//     }
+//   });
+// });
+
+app.post("/verify-user", (req, res) => {
+  const { userId } = req.body;
+
+  // Check if the user's status is already 'verified'
+  const checkQuery = `SELECT status FROM login WHERE id = ?`;
+
+  db.query(checkQuery, [userId], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error('Error checking user status:', checkErr);
+      res.status(500).json({ error: 'An error occurred while checking the user status' });
+    } else {
+      if (checkResult.length === 0) {
+        // User not found with the given ID
+        res.status(404).json({ error: 'User not found' });
+      } else if (checkResult[0].status === 'verified') {
+        // User's status is already 'verified', no need to update
+        console.log(`User with ID ${userId} is already verified`);
+        res.json({ success: true });
+      } else {
+        // Update the user's status to 'verified' in the database
+        const updateQuery = `UPDATE login SET status = 'verified' WHERE id = ?`;
+
+        db.query(updateQuery, [userId], (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error('Error updating user status:', updateErr);
+            res.status(500).json({ error: 'An error occurred while verifying the user' });
+          } else {
+            console.log(`User with ID ${userId} has been verified`);
+            res.json({ success: true });
+          }
+        });
+      }
+    }
+  });
+});
+
 
 app.post("/forgot-password-email", async (req, res) => {
   const { email } = req.body;
